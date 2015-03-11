@@ -13,7 +13,7 @@ public:
     IndividualClient(string name);
     ~IndividualClient();
 
-    bool TransferFunds(double amount, long id);
+    bool TransferFunds(double amount, int fromId, int toId);
 };
 
 #endif // INDIVIDUALCLIENT_H

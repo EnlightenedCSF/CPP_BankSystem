@@ -22,6 +22,16 @@ int main()
     banks.at(1)->RegisterNewClient(clients.at(0));
     banks.at(1)->RegisterNewClientWithSum(clients.at(1), 1000);
 
+    if (clients.at(1)->WithdrawFunds(50, 0))
+        cout << clients.at(1)->GetName() << ": Деньги списаны со счета\n";
+    else
+        cout << clients.at(1)->GetName() << ": Ошибка! Недостаточно средств или неверен id!\n";
+
+    if (clients.at(0)->WithdrawFunds(10000, 0))
+        cout << clients.at(0)->GetName() << ": Деньги списаны со счета\n";
+    else
+        cout << clients.at(0)->GetName() << ": Ошибка! Недостаточно средств или неверен id!\n";
+
 
     cout << "============== Список банков: ==============\n";
     cout << "#\tНазвание\t\tКоличество клиентов\n";

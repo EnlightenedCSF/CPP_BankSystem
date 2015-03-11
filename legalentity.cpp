@@ -14,6 +14,6 @@ LegalEntity::~LegalEntity()
 
 }
 
-bool LegalEntity::TransferFunds(double amount, long id) {
-
+bool LegalEntity::TransferFunds(double amount, int fromId, int toId) {
+    return true;
 }

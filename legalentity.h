@@ -13,7 +13,9 @@ public:
     LegalEntity(string name);
     ~LegalEntity();
 
-    bool TransferFunds(double amount, long id);
+    bool TransferFunds(double amount, int fromId, int toId);
+
+//    bool TransferFunds(double amount, int fromId, int toId);
 };
 
 #endif // LEGALENTITY_H

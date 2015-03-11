@@ -14,6 +14,6 @@ IndividualClient::~IndividualClient()
 
 }
 
-bool IndividualClient::TransferFunds(double amount, long id) {
-
+bool IndividualClient::TransferFunds(double amount, int fromId, int toId) {
+    return true;
 }
