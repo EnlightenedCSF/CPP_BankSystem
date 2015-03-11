@@ -12,15 +12,15 @@ using namespace std;
 int main()
 {
     vector<Bank*> banks;
-    banks.push_back(new Bank("Sberbank"));
+    banks.push_back(new Bank("Сбербанк"));
+    banks.push_back(new Bank("МИБ"));
 
     vector<Client*> clients;
-    clients.push_back(new IndividualClient("Vasilii Pupkin"));
-    clients.push_back(new LegalEntity("OOO \"Gasprom\""));
+    clients.push_back(new IndividualClient("Александр Ольферук"));
+    clients.push_back(new IndividualClient("Машка Старкина"));
 
-    cout << banks.size() << '\n' << clients.size() << '\n';
-
-    banks.at(0)->RegisterNewClient(clients.at(0));
+    banks.at(1)->RegisterNewClient(clients.at(0));
+    banks.at(1)->RegisterNewClientWithSum(clients.at(1), 1000);
 
 
     cout << "============== Список банков: ==============\n";
@@ -30,10 +30,24 @@ int main()
         cout << "Банков нет\n";
     else {
         for (unsigned int i = 0; i < banks.size(); i++) {
-            cout << i+1 << ")\t" << banks.at(i)->GetName() << "\t\t" << banks.at(i)->GetAccountCount();
+            cout << i+1 << ")\t" << banks.at(i)->GetName() << "\t\t" << banks.at(i)->GetAccountCount() << '\n';
+        }
+    }
+    cout << "\n\n";
+
+
+    cout << "============== Список клиентов: ==============\n";
+    cout << "#\tИмя/Название\t\tКоличество счетов\n";
+
+    if (clients.size() == 0)
+        cout << "Клиентов нет\n";
+    else {
+        for (unsigned int i = 0; i < clients.size(); i++) {
+            cout << i+1 << ")\t" << clients.at(i)->GetName() << "\t\t" << clients.at(i)->GetAccountCount() << '\n';
         }
     }
     cout << '\n';
+
 
     return 0;
 }

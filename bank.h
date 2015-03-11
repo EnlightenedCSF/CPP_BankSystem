@@ -18,6 +18,8 @@ public:
     string GetName();
 
     bool RegisterNewClient(Client* client); // регистрируем нового клиента = открываем счет
+    bool RegisterNewClientWithSum(Client* client, double sum); // регистрируем нового клиента = открываем счет
+
     int GetAccountCount() {return accounts_->size(); }
 
 private:

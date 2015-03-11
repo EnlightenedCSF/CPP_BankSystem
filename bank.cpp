@@ -19,7 +19,12 @@ Bank::~Bank()
 }
 
 bool Bank::RegisterNewClient(Client *client) {
+    this->RegisterNewClientWithSum(client, 0);
+}
+
+bool Bank::RegisterNewClientWithSum(Client *client, double sum) {
     Account* account = new Account(this, client);
+    account->AddFunds(sum);
     client->AddNewAccount(account);
     accounts_->push_back(account);
 }
@@ -27,3 +32,4 @@ bool Bank::RegisterNewClient(Client *client) {
 string Bank::GetName() {
     return name_;
 }
+

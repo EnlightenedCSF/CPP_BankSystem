@@ -14,11 +14,14 @@ public:
     Client(string name);
     ~Client();
 
+    string GetName() { return name_; }
+
     bool DepositFunds(double amount); // положить деньги на счет, возвращает правду, если все опрерация прошла успешно
     bool WithdrawFunds(double amount); // снять деньги со счета
     virtual bool TransferFunds(double amount, long id) = 0; // абстрактный метод перевода средств
 
     void AddNewAccount(Account* account);
+    int GetAccountCount() { return accounts_->size(); }
 
 private:
     string name_;
