@@ -16,7 +16,9 @@ bool LegalEntity::TransferFunds(double amount, int fromId, int toId) {
     if (accounts_->at(fromId)->GetFundsAmount() < amount)
         return false;
 
-    accounts_->at(toId)->DepositFunds(amount);
-    accounts_->at(fromId)->WithdrawFunds(amount);
+//    accounts_->at(fromId)->WithdrawFunds(amount);
+//    double forfeit = accounts_->at(fromId)->GetBank()->GetForfeit();
+//    accounts_->at(fromId)->GetBank()->Charge(amount / 100.0 * forfeit);
+//    accounts_->at(toId)->DepositFunds(amount / 100.0 * (100 - forfeit));
     return true;
 }

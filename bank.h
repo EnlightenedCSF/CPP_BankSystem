@@ -12,7 +12,7 @@ using namespace std;
 class Bank
 {
 public:
-    Bank(string name);
+    Bank(string name, double forfeit);
     ~Bank();
 
     string GetName() { return name_; }
@@ -21,11 +21,15 @@ public:
     bool RegisterNewClient(Client* client); // регистрируем нового клиента = открываем счет
     bool RegisterNewClientWithSum(Client* client, double sum); // регистрируем нового клиента = открываем счет
 
-    int GetAccountCount() {return accounts_->size(); }
+    int GetAccountCount() { return accounts_->size(); }
+    double GetForfeit() { return forfeit_; }
+
+    void Charge(double amount) { funds_ += amount; }
 
 private:
     string name_;
     double funds_;
+    double forfeit_;
 
     vector<Account*>* accounts_;
 };

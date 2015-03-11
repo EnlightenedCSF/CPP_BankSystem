@@ -4,10 +4,11 @@ using namespace std;
 
 #include "bank.h"
 
-Bank::Bank(string name)
+Bank::Bank(string name, double forfeit)
 {
     name_ = name;
     funds_ = 0;
+    forfeit_ = forfeit;
 
     accounts_ = new vector<Account*>();
 }

@@ -20,11 +20,13 @@ SOURCES += main.cpp \
     client.cpp \
     individualclient.cpp \
     legalentity.cpp \
-    account.cpp
+    account.cpp \
+    terminal.cpp
 
 HEADERS += \
     bank.h \
     client.h \
     individualclient.h \
     legalentity.h \
-    account.h
+    account.h \
+    terminal.h
