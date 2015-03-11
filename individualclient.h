@@ -11,7 +11,6 @@ class IndividualClient : public virtual Client
 {
 public:
     IndividualClient(string name);
-    ~IndividualClient();
 
     bool TransferFunds(double amount, int fromId, int toId);
 };

@@ -15,7 +15,8 @@ public:
     Bank(string name);
     ~Bank();
 
-    string GetName();
+    string GetName() { return name_; }
+    double GetFundsAmount() { return funds_; }
 
     bool RegisterNewClient(Client* client); // регистрируем нового клиента = открываем счет
     bool RegisterNewClientWithSum(Client* client, double sum); // регистрируем нового клиента = открываем счет

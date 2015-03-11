@@ -27,7 +27,7 @@ bool Client::DepositFunds(double amount, int accountId) {
     if (!IsIdCorrect(accountId))
         return false;
 
-    accounts_->at(accountId)->AddFunds(amount);
+    accounts_->at(accountId)->DepositFunds(amount);
     return true;
 }
 

@@ -26,7 +26,6 @@ public:
 protected:
     bool IsIdCorrect(int id);
 
-private:
     string name_;
     vector<Account*>* accounts_;
 };
