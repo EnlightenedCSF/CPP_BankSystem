@@ -30,3 +30,5 @@ HEADERS += \
     legalentity.h \
     account.h \
     terminal.h
+
+QMAKE_CXXFLAGS += -std=c++11
