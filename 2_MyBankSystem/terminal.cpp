@@ -4,6 +4,7 @@ using namespace std;
 #include <stdio.h>
 #include <string>
 #include <regex>
+#include <stdlib.h>
 
 #include "individualclient.h"
 #include "legalentity.h"
@@ -101,13 +102,19 @@ void Terminal::AddBank()
 
 void Terminal::DeleteBank()
 {
+	if (banks_->size() == 0)
+	{
+		cout << "The list is empty!\n\n";
+		ShowBanks();
+	}
+
 	cout << "\nDELETING A BANK\nInsert bank index: \n";
 	string strIndex;
 	getline(cin, strIndex);
 	int index = 0;
 	try {
 		 index = stoi(strIndex);
-		 if (index >= banks_->size() || index < 1)
+		 if (index > banks_->size() || index < 1)
 			 throw;
 	}
 	catch (...)
@@ -181,6 +188,8 @@ void Terminal::DeleteAccount(int index)
 
 void Terminal::ShowBank(int index)
 {
+	system("cls");
+
 	auto bank = banks_->at(index);
 	cout << "\nBank:\n\t" << bank->GetName() << '\n';
 	cout << "Accounts:\n";
@@ -207,6 +216,8 @@ void Terminal::ShowBank(int index)
 }
 
 void Terminal::ShowBanks() {
+	system("cls");
+
     cout << "============== Bank list: ==============\n";
     cout << "#\tTitle\t\tAcc. count\tBank funds\tForfeit, %\n";
 
@@ -222,6 +233,7 @@ void Terminal::ShowBanks() {
 
     cout << "[+] Add new Bank\n[-] Delete bank\n[<number>] Switch to chosen bank\n[q] Back\n";
     do {
+		command_ = "";
         getline(cin, command_);
 
 		if (command_.compare("+") == 0)
@@ -233,10 +245,8 @@ void Terminal::ShowBanks() {
 		else
 		{
 			int index = stoi(command_);
-			if (index < 1 || index > clients_->size())
-				throw;
-
-			ShowBank(--index);
+			if (!(index < 1 || index > banks_->size()))
+				ShowBank(--index);
 		}
     } while (1);
 }
@@ -277,18 +287,24 @@ void Terminal::AddClient()
 
 void Terminal::DeleteClient()
 {
+	if (clients_->size() == 0)
+	{
+		cout << "List is empty!\n\n";
+		ShowClients();
+	}
+
 	cout << "\nDELETING A CLIENT\nInsert client index: \n";
 	string strIndex;
 	getline(cin, strIndex);
 	int index = 0;
 	try {
 		index = stoi(strIndex);
-		if (index >= clients_->size() || index < 1)
-			throw;
+		if (index > clients_->size() || index < 1)
+			throw invalid_argument("Invalid index!");
 	}
-	catch (...)
+	catch (const invalid_argument& e)
 	{
-		cout << "Index must be correct!\n\n";
+		cout << e.what();
 		ShowBanks();
 	}
 
@@ -302,6 +318,8 @@ void Terminal::DeleteClient()
 
 void Terminal::ShowClient(int index)
 {
+	system("cls");
+
 	auto client = clients_->at(index);
 	cout << "\nClient:\n\t" << client->GetName() << '\n';
 	cout << "Accounts:\n";
@@ -330,6 +348,8 @@ void Terminal::ShowClient(int index)
 }
 
 void Terminal::ShowClients() {
+	system("cls");
+
     cout << "\n============== Client list: ==============\n";
     cout << "#\tName/Title\t\tAccount count\n";
 
@@ -356,13 +376,14 @@ void Terminal::ShowClients() {
 		{
 			int index = stoi(command_);
 			if (index < 1 || index > clients_->size())
-				throw;
+				throw invalid_argument("Invalid index!");
 
 			ShowClient(--index);
 		}
-		catch (...) { }
-		
-
+		catch (const invalid_argument& e)
+		{
+			cout << e.what() << "\n\n";
+		}
 	} while (1);
 }
 
