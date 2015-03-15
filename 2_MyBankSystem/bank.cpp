@@ -43,8 +43,12 @@ void Bank::ClearData()
 void Bank::DeleteAccount(Account* account)
 {
 	auto pos = find(accounts_->begin(), accounts_->end(), account);
+	
 	if (pos != accounts_->end())
+	{
+		account->GetClient()->DeleteAccount(account);
 		accounts_->erase(pos);
+	}
 }
 
 Account* Bank::GetAccountAtIndex(int index)

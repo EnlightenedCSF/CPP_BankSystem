@@ -51,3 +51,8 @@ Client* Account::GetClient()
 {
 	return client_;
 }
+
+void Account::ClearLinks()
+{
+
+}

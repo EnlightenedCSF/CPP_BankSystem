@@ -23,6 +23,8 @@ public:
     Bank* GetBank();
 	Client* GetClient();
 
+	void ClearLinks();
+
 private:
     double funds_;
 
