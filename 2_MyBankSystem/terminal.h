@@ -21,11 +21,14 @@ private:
     vector<Client*>* clients_;
 
     string command_;
-    bool IsCommandValid(string regexp);
 
 	void AddBank();
 	void DeleteBank();
+	void RegisterNewClient(int index);
+	void DeleteAccount(int index);
+	void ShowBank(int index);
 	void ShowBanks();
+	
 	void AddClient();
 	void DeleteClient();
 	

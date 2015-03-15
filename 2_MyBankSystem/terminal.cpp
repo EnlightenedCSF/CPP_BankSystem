@@ -45,30 +45,25 @@ void Terminal::LoadDemoData() {
 }
 
 void Terminal::ShowDemo() {
-    /*if (clients_->at(1)->WithdrawFunds(50, 0))
-        cout << clients_->at(1)->GetName() << ": Деньги списаны со счета\n";
+    if (clients_->at(1)->WithdrawFunds(50, 0))
+        cout << clients_->at(1)->GetName() << ": Withdrawn\n";
 
     if (!clients_->at(0)->WithdrawFunds(10000000, 0))
-        cout << clients_->at(0)->GetName() << ": Ошибка! Недостаточно средств или неверен id!\n";
+        cout << clients_->at(0)->GetName() << ": Error! Not enough money or wrong id!\n";
 
     if (clients_->at(0)->DepositFunds(900, 0))
-        cout << "Ольферук теперь тоже богатенький\n";
+        cout << "Successfully added\n";
 
     if (clients_->at(0)->TransferFunds(900, 0, 1))
-        cout << "Успешно перечислены\n";
+        cout << "Successfully transferred\n";
 
     if (clients_->at(2)->TransferFunds(500000, 1, 0))
-        cout << "А ВГУ может и между банками пересылать денежки!\n";
+        cout << "Legal entity can tranfer between different banks!\n";
 
     if (!clients_->at(0)->TransferFunds(100, 0, 2))
-        cout << "Между банками индивидуальному лицу нельзя передать деньги\n";
+        cout << "But individual clients can't transfer between banks\n";
 
-    cout << "\n\n";*/
-}
-
-bool Terminal::IsCommandValid(string regexp) {
-    regex rgx(regexp);
-    return regex_match(command_, rgx);
+    cout << "\n\n";
 }
 
 void Terminal::AddBank()
@@ -129,18 +124,98 @@ void Terminal::DeleteBank()
 	ShowBanks();
 }
 
-void Terminal::ShowBanks() {
-    command_ = "";
+void Terminal::RegisterNewClient(int index)
+{
+	cout << "\nREGISTRATION\n\tClient list:\n";
+	for (int i = 0; i < clients_->size(); i++)
+	{
+		cout << i + 1 << ")\t" << clients_->at(i)->GetName() << '\n';
+	}
+	cout << "\nInput client index to register: ";
+	getline(cin, command_);
 
+	try
+	{
+		int id = stoi(command_);
+		if (id < 1 || id > clients_->size())
+			throw;
+
+		cout << "Input a starting sum: ";
+		getline(cin, command_);
+		double sum = stod(command_);
+		if (sum < 0)
+			throw;
+
+		if (banks_->at(index)->RegisterNewClientWithSum(clients_->at(--id), sum))
+			cout << "Success!\n\n";
+		else
+			cout << "Error!\n\n";
+	}
+	catch (...)
+	{
+		cout << "Error!\n\n";
+	}
+	ShowBank(index);
+}
+
+void Terminal::DeleteAccount(int index)
+{
+	try
+	{
+		cout << "\nACCOUNT DELETING\n";
+		cout << "Input index of an account to delete: ";
+		getline(cin, command_);
+		int id = stoi(command_);
+		if (id < 1 || id > banks_->at(index)->GetAccountCount())
+			throw;
+
+		banks_->at(index)->DeleteAccount(banks_->at(index)->GetAccountAtIndex(--id));
+		cout << "Success!\n\n";
+	}
+	catch (...)
+	{
+		cout << "Error!\n\n";
+	}
+	ShowBank(index);
+}
+
+void Terminal::ShowBank(int index)
+{
+	auto bank = banks_->at(index);
+	cout << "\nBank:\n\t" << bank->GetName() << '\n';
+	cout << "Accounts:\n";
+	for (int i = 0; i < bank->GetAccountCount(); i++)
+	{
+		cout << i + 1 << ")\t" << bank->GetAccountAtIndex(i)->GetClientName() << "\t"; // << client->GetAccountAtIndex(i)->GetFunds() << '\n';
+		printf("%5.2f\n", bank->GetAccountAtIndex(i)->GetFunds());
+	}
+	cout << "----------\nTotal: " << bank->GetAccountCount() << '\n';
+
+	cout << "\n[+] Register new client\n[-] Delete account\n[q] Back\n";
+
+	do
+	{
+		getline(cin, command_);
+
+		if (command_.compare("+") == 0)
+			RegisterNewClient(index);
+		else if (command_.compare("-") == 0)
+			DeleteAccount(index);
+		else if (command_.compare("q") == 0)
+			ShowBanks();
+	} while (1);
+}
+
+void Terminal::ShowBanks() {
     cout << "============== Bank list: ==============\n";
-    cout << "#\tTitle\t\tAccount count\t\tBank funds\n";
+    cout << "#\tTitle\t\tAcc. count\tBank funds\tForfeit, %\n";
 
     if (banks_->size() == 0)
         cout << "Empty\n";
     else {
         for (unsigned int i = 0; i < banks_->size(); i++) {
             cout << i+1 << ")\t" << banks_->at(i)->GetName() << "\t\t" << banks_->at(i)->GetAccountCount()
-                 << "\t\t\t\t" << banks_->at(i)->GetFundsAmount() << '\n';
+                 << "\t\t" << banks_->at(i)->GetFundsAmount() << "\t\t" << banks_->at(i)->GetForfeit() << '\n';
         }
     }
     cout << "\n\n";
@@ -155,7 +230,15 @@ void Terminal::ShowBanks() {
 			DeleteBank();
 		else if (command_.compare("q") == 0)
 			Start();
-    } while (command_.compare("+") && command_.compare("q") && command_.compare("-"));
+		else
+		{
+			int index = stoi(command_);
+			if (index < 1 || index > clients_->size())
+				throw;
+
+			ShowBank(--index);
+		}
+    } while (1);
 }
 
 void Terminal::AddClient()

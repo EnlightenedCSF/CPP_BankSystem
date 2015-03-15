@@ -46,3 +46,8 @@ void Bank::DeleteAccount(Account* account)
 	if (pos != accounts_->end())
 		accounts_->erase(pos);
 }
+
+Account* Bank::GetAccountAtIndex(int index)
+{
+	return accounts_->at(index);
+}

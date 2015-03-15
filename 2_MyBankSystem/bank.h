@@ -26,6 +26,8 @@ public:
 
 	void ClearData();
 	void DeleteAccount(Account* account);
+	Account* GetAccountAtIndex(int index);
+
 private:
     string name_;
     double funds_;
