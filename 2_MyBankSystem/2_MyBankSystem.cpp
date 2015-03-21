@@ -1,14 +1,7 @@
-using namespace std;
-
 #include <stdio.h>
 #include <iostream>
-#include <vector>
 #include <locale>
 
-#include "bank.h"
-#include "client.h"
-#include "individualclient.h"
-#include "legalentity.h"
 #include "terminal.h"
 
 int main()

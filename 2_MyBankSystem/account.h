@@ -1,5 +1,3 @@
-using namespace std;
-
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
@@ -12,18 +10,16 @@ public:
     Account(Bank* bank, Client* client);
     ~Account();
 
-    string GetBankName();
-	string GetClientName();
+	std::string GetBankName();
+	std::string GetClientName();
 
 	double GetFunds();
     void DepositFunds(double amount);
     bool WithdrawFunds(double amount);
     double GetFundsAmount() { return funds_; }
 
-    Bank* GetBank();
-	Client* GetClient();
-
-	void ClearLinks();
+    Bank& GetBank();
+	Client& GetClient();
 
 private:
     double funds_;

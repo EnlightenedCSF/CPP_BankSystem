@@ -1,5 +1,3 @@
-using namespace std;
-
 #ifndef BANK_H
 #define BANK_H
 
@@ -10,10 +8,10 @@ using namespace std;
 class Bank
 {
 public:
-    Bank(string name, double forfeit);
+    Bank(std::string name, double forfeit);
     ~Bank();
 
-    string GetName() { return name_; }
+	std::string GetName() { return name_; }
     double GetFundsAmount() { return funds_; }
 
     bool RegisterNewClient(Client* client); // регистрируем нового клиента = открываем счет
@@ -24,16 +22,15 @@ public:
 
     void Charge(double amount) { funds_ += amount; }
 
-	void ClearData();
 	void DeleteAccount(Account* account);
-	Account* GetAccountAtIndex(int index);
+	Account& GetAccountAtIndex(int index);
 
 private:
-    string name_;
+	std::string name_;
     double funds_;
     double forfeit_;
 
-    vector<Account*>* accounts_;
+	std::vector<Account*>* accounts_;
 };
 
 #endif // BANK_H

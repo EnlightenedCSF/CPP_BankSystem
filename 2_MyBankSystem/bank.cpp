@@ -1,21 +1,25 @@
 #include "client.h"
-using namespace std;
 
 #include <string>
 
 #include "bank.h"
 
-Bank::Bank(string name, double forfeit)
+Bank::Bank(std::string name, double forfeit)
 {
     name_ = name;
     funds_ = 0;
     forfeit_ = forfeit;
 
-    accounts_ = new vector<Account*>();
+    accounts_ = new std::vector<Account*>();
 }
 
 Bank::~Bank()
 {
+	for (int i = 0; i < accounts_->size(); i++)
+	{
+		(*accounts_)[i]->GetClient().DeleteAccount((*accounts_)[i]);
+	}
+
     accounts_->clear();
     delete accounts_;
 }
@@ -32,13 +36,6 @@ bool Bank::RegisterNewClientWithSum(Client *client, double sum) {
     return true;
 }
 
-void Bank::ClearData()
-{
-	for (int i = 0; i < accounts_->size(); i++)
-	{
-		accounts_->at(i)->GetClient()->DeleteAccount(accounts_->at(i));
-	}
-}
 
 void Bank::DeleteAccount(Account* account)
 {
@@ -46,12 +43,12 @@ void Bank::DeleteAccount(Account* account)
 	
 	if (pos != accounts_->end())
 	{
-		account->GetClient()->DeleteAccount(account);
+		account->GetClient().DeleteAccount(account);
 		accounts_->erase(pos);
 	}
 }
 
-Account* Bank::GetAccountAtIndex(int index)
+Account& Bank::GetAccountAtIndex(int index)
 {
-	return accounts_->at(index);
+	return *(*accounts_)[index];
 }

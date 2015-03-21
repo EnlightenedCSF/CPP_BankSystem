@@ -1,5 +1,3 @@
-using namespace std;
-
 #include <string>
 
 #include "account.h"
@@ -17,12 +15,12 @@ Account::~Account()
 
 }
 
-string Account::GetBankName() {
+std::string Account::GetBankName() {
 
     return bank_->GetName();
 }
 
-string Account::GetClientName() {
+std::string Account::GetClientName() {
     return client_->GetName();
 }
 
@@ -43,16 +41,11 @@ bool Account::WithdrawFunds(double amount) {
     return true;
 }
 
-Bank* Account::GetBank() {
-    return bank_;
+Bank& Account::GetBank() {
+    return *bank_;
 }
 
-Client* Account::GetClient()
+Client& Account::GetClient()
 {
-	return client_;
-}
-
-void Account::ClearLinks()
-{
-
+	return *client_;
 }
