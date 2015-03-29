@@ -52,3 +52,9 @@ Account& Bank::GetAccountAtIndex(int index)
 {
 	return *(*accounts_)[index];
 }
+
+
+std::ostream& operator << (std::ostream& out, Bank* bank){
+	out << bank->GetName() << "\t\t" << bank->GetAccountCount() << "\t\t" << bank->GetFundsAmount() << "\t\t" << bank->GetForfeit() << '\n';
+	return out;
+}

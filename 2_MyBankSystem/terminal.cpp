@@ -27,22 +27,28 @@ Terminal::~Terminal()
 }
 
 void Terminal::LoadDemoData() {
-    banks_->push_back(new Bank("Sberbank", 2));
-    banks_->push_back(new Bank("MoskInBank", 1));
+	auto b1 = new Bank("Sberbank", 2);
+	auto b2 = new Bank("MoskInBank", 1);
 
-    clients_->push_back(new IndividualClient("John Doe"));
-    clients_->push_back(new IndividualClient("Marry Smith"));
+    banks_->push_back(b1);
+    banks_->push_back(b2);
 
-    clients_->push_back(new LegalEntity("OOO Gasprom"));
+	auto c1 = new IndividualClient("John Doe");
+	auto c2 = new IndividualClient("Marry Smith");
+	auto c3 = new LegalEntity("OOO Gasprom"); 
 
-	(*banks_)[1]->RegisterNewClient((*clients_)[0]);
-	(*banks_)[1]->RegisterNewClientWithSum((*clients_)[1], 1000);
-	(*banks_)[1]->RegisterNewClient((*clients_)[0]);
+    clients_->push_back(c1);
+    clients_->push_back(c2);
+    clients_->push_back(c3);
 
-	(*banks_)[0]->RegisterNewClientWithSum((*clients_)[2], 1000000);
-	(*banks_)[1]->RegisterNewClientWithSum((*clients_)[2], 1000000);
+	b2->RegisterNewClient(c1);
+	b2->RegisterNewClientWithSum(c2, 1000);
+	b2->RegisterNewClient(c1);
 
-	(*banks_)[0]->RegisterNewClient((*clients_)[0]);
+	b1->RegisterNewClientWithSum(c3, 1000000);
+	b2->RegisterNewClientWithSum(c3, 1000000);
+
+	b1->RegisterNewClient(c1);
 }
 
 void Terminal::ShowDemo() {
@@ -221,9 +227,8 @@ void Terminal::ShowBanks() {
 	    std::cout << "Empty\n";
     else {
         for (unsigned int i = 0; i < banks_->size(); i++) {
-	        std::cout << i + 1 << ")\t" << (*banks_)[i]->GetName() << "\t\t" << (*banks_)[i]->GetAccountCount()
-				<< "\t\t" << (*banks_)[i]->GetFundsAmount() << "\t\t" << (*banks_)[i]->GetForfeit() << '\n';
-        }
+			std::cout << i + 1 << ")\t" << (*banks_)[i];
+        }	    
     }
 	std::cout << "\n\n";
 
@@ -338,7 +343,7 @@ void Terminal::ShowClients() {
 	    std::cout << "Empty\n";
     else {
         for (unsigned int i = 0; i < clients_->size(); i++) {
-	        std::cout << i+1 << ")\t" << (*clients_)[i]->GetName() << "\t\t" << (*clients_)[i]->GetAccountCount() << '\n';
+			std::cout << i + 1 << ")\t" << (*clients_)[i]; //(*clients_)[i]->GetName() << "\t\t" << (*clients_)[i]->GetAccountCount() << '\n';
         }
     }
 	std::cout << "\n\n";
@@ -372,7 +377,7 @@ void Terminal::ShowClient(int index)
 	std::cout << "Accounts:\n";
 	for (int i = 0; i < client->GetAccountCount(); i++)
 	{
-		std::cout << i + 1 << ")\t" << client->GetAccountAtIndex(i).GetBankName() << "\t";// << client->GetAccountAtIndex(i)->GetFunds() << '\n';
+		std::cout << i + 1 << ")\t" << client->GetAccountAtIndex(i).GetBankName() << "\t";
 		printf("%5.2f\n", client->GetAccountAtIndex(i).GetFunds());
 	}
 	std::cout << "----------\nTotal: " << client->GetAccountCount() << '\n';

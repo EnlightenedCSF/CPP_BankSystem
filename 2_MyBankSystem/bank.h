@@ -25,6 +25,8 @@ public:
 	void DeleteAccount(Account* account);
 	Account& GetAccountAtIndex(int index);
 
+	friend std::ostream& operator << (std::ostream& out, Bank* bank);
+
 private:
 	std::string name_;
     double funds_;

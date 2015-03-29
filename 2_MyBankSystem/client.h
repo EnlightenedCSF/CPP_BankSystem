@@ -25,6 +25,10 @@ public:
 	
 	bool IsIdCorrect(int id);
 
+	virtual std::ostream& print(std::ostream& out, Client* client) = 0;
+
+ 	friend std::ostream& operator << (std::ostream& out, Client* client);
+
 protected:
 	std::string name_;
 	std::vector<Account*>* accounts_;

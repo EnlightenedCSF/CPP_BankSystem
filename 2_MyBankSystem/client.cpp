@@ -63,3 +63,6 @@ void Client::AddNewAccount(Account *account) {
     accounts_->push_back(account);
 }
 
+std::ostream& operator << (std::ostream& out, Client* client) {
+	return client->print(out, client);
+}
